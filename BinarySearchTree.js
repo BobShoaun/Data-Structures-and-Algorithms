@@ -1,10 +1,4 @@
 class BinarySearchTree {
-	// class Node {
-	//   constructor(key) {
-	//     this.key = key;
-	//   }
-	// }
-
 	constructor(root) {
 		this.root = root;
 		this.left = null;
