@@ -8,6 +8,8 @@ def quickSort(array):
     bigger = quickSort(bigger)
     return smaller + [pivot] + bigger
 
+# num = 0
+
 def partition(array, pivot):
   smaller = []
   bigger = []
@@ -18,4 +20,10 @@ def partition(array, pivot):
       bigger.append(item)
   return smaller, bigger
 
-print (quickSort([3, 4, 6, 9, 100, 2, -2, -333, 34, 2, 5]))
+# print (quickSort([3, 4, 6, 9, 100, 2, -2, -333, 34, 2, 5]))
+# print (quickSort([6,1,5,4,2]))
+
+lst = list(range(0, 101))
+print(quickSort(lst))
+
+print (num)
