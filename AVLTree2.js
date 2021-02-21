@@ -1,5 +1,5 @@
 // import Queue from "./Queue.js";
-const Queue = require('./Queue');
+const Queue = require("./Queue");
 
 /*
 An AVL tree is a binary search tree with the property of a balance factor
@@ -8,15 +8,15 @@ this one is my own modification that is easier to consume
 
 class AVLTree {
 	constructor() {
-    this.key = null;
+		this.key = null;
 		this.left = null;
 		this.right = null;
 		this.height = -1;
-  }
+	}
 
-  getLeftHeight = () => this.left ? this.left.height : -1;
-  getRightHeight = () => this.right ? this.right.height : -1;
-  getBalance = () => this.getRightHeight() - this.getLeftHeight();
+	getLeftHeight = () => (this.left ? this.left.height : -1);
+	getRightHeight = () => (this.right ? this.right.height : -1);
+	getBalance = () => this.getRightHeight() - this.getLeftHeight();
 
 	updateHeight() {
 		this.height = 1 + Math.max(this.getLeftHeight(), this.getRightHeight());
@@ -56,21 +56,19 @@ class AVLTree {
 
 	/* insert key into tree, return new tree. */
 	insert(key) {
-		if (!this.key) { 
-      this.key = key;
-      this.height = 0;
-      return this;
-    }
+		if (!this.key) {
+			this.key = key;
+			this.height = 0;
+			return this;
+		}
 
 		if (key < this.key) {
-      if (!this.left) this.left = new AVLTree();
-      this.left = this.left.insert(key);
-    }
-		else if (key > this.key) {
-      if (!this.right) this.right = new AVLTree();
-      this.right = this.right.insert(key);
-    }
-		else throw new Error("No duplicate values allowed");
+			if (!this.left) this.left = new AVLTree();
+			this.left = this.left.insert(key);
+		} else if (key > this.key) {
+			if (!this.right) this.right = new AVLTree();
+			this.right = this.right.insert(key);
+		} else throw new Error("No duplicate values allowed");
 
 		this.updateHeight();
 
@@ -78,27 +76,27 @@ class AVLTree {
 
 		// left left
 		if (balance < -1 && key < this.left.key) {
-      return this.rightRotate();
-    } 
+			return this.rightRotate();
+		}
 
 		// right right
 		if (balance > 1 && key > this.right.key) {
-      return this.leftRotate();
-    } 
+			return this.leftRotate();
+		}
 
 		// left right
 		if (balance < -1 && key > this.left.key) {
 			this.left = this.left.leftRotate();
-      return this.rightRotate();
+			return this.rightRotate();
 		}
 
 		// right left
 		if (balance > 1 && key < this.right.key) {
 			this.right = this.right.rightRotate();
-      return this.leftRotate();
+			return this.leftRotate();
 		}
 
-    return this;
+		return this;
 	}
 	delete(key) {}
 	preOrderTraversal() {
@@ -107,27 +105,24 @@ class AVLTree {
 		this.left?.preOrderTraversal();
 		this.right?.preOrderTraversal();
 	}
-  bfs() {
-    let queue = new Queue();
-    queue.enqueue(this);
 
-    while (!queue.empty) {
-      let curr = queue.dequeue()
-      console.log(curr.key);
+	bfs() {
+		let queue = new Queue();
+		queue.enqueue(this);
 
-      if (curr.left)
-        queue.enqueue(curr.left);
-      if (curr.right)
-        queue.enqueue(curr.right);
+		while (!queue.empty) {
+			let curr = queue.dequeue();
+			console.log(curr.key);
 
-    }
-  }
+			if (curr.left) queue.enqueue(curr.left);
+			if (curr.right) queue.enqueue(curr.right);
+		}
+	}
 
 	insertAll(keys) {
-    let root = this;
-		for (let key of keys) 
-      root = root.insert(key);
-    return root;
+		let root = this;
+		for (let key of keys) root = root.insert(key);
+		return root;
 	}
 }
 
