@@ -20,4 +20,6 @@ function partition(array, pivot) {
   return { bigger, smaller };
 }
 
+module.exports = quickSort;
+
 console.log(quickSort([2, 5, 3, -22, 6, -4, -5, 100, 32, 2, 34, -2323, 6, -4, 89, 69]));
