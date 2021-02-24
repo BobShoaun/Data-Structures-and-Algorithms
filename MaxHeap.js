@@ -1,84 +1,95 @@
 class MaxHeap {
-  constructor() {
-    this.array = [Infinity]
-  }
+	constructor() {
+		this.array = [Infinity];
+	}
 
-  // O(log n)
-  insert(...numbers) {
-    numbers.forEach(number => this.bubbleUp(this.array.push(number) - 1));
-  }
+	get empty() {
+		return this.array.length <= 1;
+	}
 
-  // O(1)
-  findMax() {
-    return this.array[1] || null;
-  }
+	// O(log n)
+	insert(...numbers) {
+		numbers.forEach(number => this.bubbleUp(this.array.push(number) - 1));
+	}
 
-  // O(n log n)
-  extractMax() {
-    let max = this.array[1];
-    this.array[1] = this.array.pop();
-    this.maxHeapify(1);
-    return max;
-  }
+	// O(1)
+	findMax() {
+		return this.array[1] || null;
+	}
 
-  // O(log n)
-  maxHeapify(index) {
-    let left = this.getLeftChild(index);
-    let right = this.getRightChild(index);
-    let max = index;
+	// O(n log n)
+	extractMax() {
+		if (this.array.length == 2) return this.array.pop();
 
-    // left bigger
-    if (this.array[max] < this.array[left])
-      max = left;
+		let max = this.array[1];
+		this.array[1] = this.array.pop();
+		this.maxHeapify(1);
+		return max;
+	}
 
-    if (this.array[max] < this.array[right])
-      max = right;
+	// O(log n)
+	maxHeapify(index) {
+		let left = this.getLeftChild(index);
+		let right = this.getRightChild(index);
+		let max = index;
 
-    // valid heap
-    if (max == index)
-      return;
-    
-    this.swap(index, max);
-    this.maxHeapify(max);
-  }
+		// left bigger
+		if (this.array[max] < this.array[left]) max = left;
 
-  // O(log n)
-  bubbleUp(index) {
-    let parent = this.getParent(index)
-    if (this.array[index] > this.array[parent]) {
-      this.swap(index, parent);
-      this.bubbleUp(parent);
-    }
-  }
+		if (this.array[max] < this.array[right]) max = right;
 
-  swap(i, j) {
-    let temp = this.array[i];
-    this.array[i] = this.array[j];
-    this.array[j] = temp;
-  }
+		// valid heap
+		if (max == index) return;
 
-  getParent(index) {
-    return Math.floor(index / 2);
-  }
+		this.swap(index, max);
+		this.maxHeapify(max);
+	}
 
-  getLeftChild(index) {
-    return index * 2;
-  }
+	// O(log n)
+	bubbleUp(index) {
+		let parent = this.getParent(index);
+		if (this.array[index] > this.array[parent]) {
+			this.swap(index, parent);
+			this.bubbleUp(parent);
+		}
+	}
 
-  getRightChild(index) {
-    return index * 2 + 1;
-  }
+	swap(i, j) {
+		let temp = this.array[i];
+		this.array[i] = this.array[j];
+		this.array[j] = temp;
+	}
 
-  visualize() {
-    for (let i = 1; i < this.array.length; i++) {
-      
-    }
-  }
+	getParent(index) {
+		return Math.floor(index / 2);
+	}
+
+	getLeftChild(index) {
+		return index * 2;
+	}
+
+	getRightChild(index) {
+		return index * 2 + 1;
+	}
+
+	visualize() {
+		for (let i = 1; i < this.array.length; i++) {}
+	}
 }
 
-let h = new MaxHeap();
-h.insert(20, 9, 18, 8, 6, 5, 12, 3, 2)
-console.log(h.array);
-h.insert(11);
-console.log(h.array);
+module.exports = MaxHeap;
 
+// let h = new MaxHeap();
+// // h.insert(20, 9, 18, 8, 6, 5, 12, 3, 2)
+// h.insert(20, 2);
+
+// console.log(h.array);
+// h.insert(11);
+// console.log(h.array);
+
+// console.log(h.extractMax());
+// console.log(h.extractMax());
+
+// console.log(h.array);
+// console.log(h.extractMax());
+// console.log(h.array);

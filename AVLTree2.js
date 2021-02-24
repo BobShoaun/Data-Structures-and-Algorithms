@@ -137,12 +137,15 @@ class AVLTree {
 		}
 	}
 
-	insertAll(keys) {
+	insertAll(...keys) {
 		let root = this;
-		for (let key of keys) root = root.insert(key);
+		for (let key of keys) 
+      root = root.insert(key);
 		return root;
 	}
 }
+
+module.exports = AVLTree;
 
 let tree = new AVLTree();
 // tree = tree.insert(7);
@@ -152,7 +155,7 @@ let tree = new AVLTree();
 // tree = tree.insert(3);
 // tree = tree.insert(4);
 
-tree = tree.insertAll([7, 5, 6, 8, 3, 4]);
+tree = tree.insertAll(7, 5, 6, 8, 3, 4);
 
 console.log([...tree.preOrderTraversal()]);
 
