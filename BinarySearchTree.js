@@ -112,9 +112,9 @@ module.exports = BinarySearchTree;
 // bst2.delete(31);
 // bst2.inOrderTraversal();
 
-let bst2 = new BinarySearchTree();
-bst2.insertAll([11, 3, 13, 2, 6, 12, 16, 5, 9, 14, 18, 4, 7, 15, 17, 19, 8]);
+// let bst2 = new BinarySearchTree();
+// bst2.insertAll([11, 3, 13, 2, 6, 12, 16, 5, 9, 14, 18, 4, 7, 15, 17, 19, 8]);
 
-console.log(Array.from(bst2.inOrderTraversal()))
+// console.log(Array.from(bst2.inOrderTraversal()))
 
 // for (let k of bst2.inOrderTraversal()) console.log(k);

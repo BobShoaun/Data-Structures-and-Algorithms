@@ -98,20 +98,39 @@ class AVLTree {
 		return this;
 	}
 	delete(key) {}
-	preOrderTraversal() {
-		if (!this.key) return;
-		console.log(this.key, this.height, this.getBalance());
-		this.left?.preOrderTraversal();
-		this.right?.preOrderTraversal();
+
+	// preOrderTraversal() {
+	// 	if (!this.key) return;
+	// 	console.log(this.key, this.height, this.getBalance());
+	// 	this.left?.preOrderTraversal();
+	// 	this.right?.preOrderTraversal();
+	// }
+
+  *inOrderTraversal() {
+		if (this.left) yield* this.left.inOrderTraversal();
+		if (this.key) yield this.key;
+		if (this.right) yield* this.right.inOrderTraversal();
 	}
 
-	bfs() {
+	*preOrderTraversal() {
+		if (this.key) yield this.key;
+    if (this.left) yield* this.left.preOrderTraversal();
+		if (this.right) yield* this.right.preOrderTraversal();
+	}
+
+	*postOrderTraversal() {
+    if (this.left) yield* this.left.postOrderTraversal();
+		if (this.right) yield* this.right.postOrderTraversal();
+		if (this.key) yield this.key;
+	}
+
+	*bfs() {
 		let queue = new Queue();
 		queue.enqueue(this);
 
 		while (!queue.empty) {
 			let curr = queue.dequeue();
-			console.log(curr.key);
+      yield curr.key;
 
 			if (curr.left) queue.enqueue(curr.left);
 			if (curr.right) queue.enqueue(curr.right);
@@ -135,6 +154,6 @@ let tree = new AVLTree();
 
 tree = tree.insertAll([7, 5, 6, 8, 3, 4]);
 
-tree.preOrderTraversal();
+console.log([...tree.preOrderTraversal()]);
 
-tree.bfs();
+console.log([...tree.bfs()]);
