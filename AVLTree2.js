@@ -5,7 +5,6 @@ const Queue = require("./Queue");
 An AVL tree is a binary search tree with the property of a balance factor
 this one is my own modification that is easier to consume
 */
-
 class AVLTree {
 	constructor() {
 		this.key = null;

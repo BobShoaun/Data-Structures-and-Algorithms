@@ -1,60 +1,60 @@
 class BinarySearchTree {
-	constructor(root) {
-		this.root = root;
+	constructor() {
+		this.key = null;
 		this.left = null;
 		this.right = null;
 	}
 
 	// O(log n)
-	insert(value) {
-		if (!this.root) {
-			this.root = value;
+	insert(key) {
+		if (!this.key) {
+			this.key = key;
 			return;
 		}
-		if (value < this.root) {
+		if (key < this.key) {
 			if (!this.left) this.left = new BinarySearchTree();
-			this.left.insert(value);
+			this.left.insert(key);
 			return;
 		}
-		if (value > this.root) {
+		if (key > this.key) {
 			if (!this.right) this.right = new BinarySearchTree();
-			this.right.insert(value);
+			this.right.insert(key);
 			return;
 		}
 		throw new Error("No duplicate values allowed");
 	}
 
 	// O(log n)
-	search(value) {
-		if (!this.root) return false;
+	search(key) {
+		if (!this.key) return false;
 
-		if (value < this.root && this.left) return this.left.search(value);
+		if (key < this.key && this.left) return this.left.search(key);
 
-		if (value > this.root && this.right) return this.right.search(value);
+		if (key > this.key && this.right) return this.right.search(key);
 
-		return this.root == value;
+		return this.key == key;
 	}
 
 	inOrderSuccessor() {
 		let curr = this?.right;
 		while (curr.left) curr = curr.left;
-		return curr.root;
+		return curr.key;
 	}
 
-	delete(value) {
-		if (!this.root) return false;
+	delete(key) {
+		if (!this.key) return false;
 
-		if (value < this.root && this.left) return this.left.delete(value);
-		if (value > this.root && this.right) return this.right.delete(value);
+		if (key < this.key && this.left) return this.left.delete(key);
+		if (key > this.key && this.right) return this.right.delete(key);
 
-		if (value == this.root) {
+		if (key == this.key) {
 			if (!this.left) {
-				this.root = this.right?.root;
+				this.key = this.right?.key;
 				this.right = null;
 				return true;
 			}
 			if (!this.right) {
-				this.root = this.left?.root;
+				this.key = this.left?.key;
 				this.left = null;
 				return true;
 			}
@@ -62,31 +62,36 @@ class BinarySearchTree {
 			// tree has two subtrees
 			// replace root with successor (smallest node in right subtree)
 			let temp = this.inOrderSuccessor();
-			this.root = temp;
+			this.key = temp;
 			return this.right.delete(temp);
 		}
 		return false;
 	}
 
-	inOrderTraversal() {
-		this.left?.inOrderTraversal();
-		if (this.root) console.log(this.root);
-		this.right?.inOrderTraversal();
+	*inOrderTraversal() {
+		if (this.left) yield* this.left.inOrderTraversal();
+		if (this.key) yield this.key;
+		if (this.right) yield* this.right.inOrderTraversal();
 	}
 
-	preOrderTraversal() {
-		console.log(this.root);
-		this.left?.preOrderTraversal();
-		this.right?.preOrderTraversal();
+	*preOrderTraversal() {
+		if (this.key) yield this.key;
+    if (this.left) yield* this.left.preOrderTraversal();
+		if (this.right) yield* this.right.preOrderTraversal();
 	}
 
-	postOrderTraversal() {
-		this.left?.postOrderTraversal();
-		this.right?.postOrderTraversal();
-		if (this.root) console.log(this.root);
+	*postOrderTraversal() {
+    if (this.left) yield* this.left.postOrderTraversal();
+		if (this.right) yield* this.right.postOrderTraversal();
+		if (this.key) yield this.key;
+	}
+
+	insertAll(keys) {
+		for (let key of keys) this.insert(key);
 	}
 }
 
+module.exports = BinarySearchTree;
 // let bst2 = new BinarySearchTree(25);
 // bst2.insert(15);
 // bst2.insert(50);
@@ -107,11 +112,9 @@ class BinarySearchTree {
 // bst2.delete(31);
 // bst2.inOrderTraversal();
 
-function insertAll(bst, values) {
-	for (let i = 0; i < values.length; i++) bst.insert(values[i]);
-}
+let bst2 = new BinarySearchTree();
+bst2.insertAll([11, 3, 13, 2, 6, 12, 16, 5, 9, 14, 18, 4, 7, 15, 17, 19, 8]);
 
-let bst2 = new BinarySearchTree(11);
-insertAll(bst2, [3, 13, 2, 6, 12, 16, 5, 9, 14, 18, 4, 7, 15, 17, 19, 8]);
+console.log(Array.from(bst2.inOrderTraversal()))
 
-bst2.preOrderTraversal();
+// for (let k of bst2.inOrderTraversal()) console.log(k);
