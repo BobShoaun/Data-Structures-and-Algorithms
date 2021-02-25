@@ -18,7 +18,7 @@ class MaxHeap {
 		return this.array[1] || null;
 	}
 
-	// O(n log n)
+	// O(log n)
 	extractMax() {
 		if (this.array.length == 2) return this.array.pop();
 

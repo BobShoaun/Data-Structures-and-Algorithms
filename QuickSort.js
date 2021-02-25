@@ -1,3 +1,8 @@
+/* 
+  worst case O(n^2)
+  average case O(n log n)
+  best case O(n log n)
+*/
 function quickSort(array) {
   if (array.length < 2)
     return array;

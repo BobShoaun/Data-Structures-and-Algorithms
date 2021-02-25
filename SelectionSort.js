@@ -13,9 +13,8 @@ function selectionSort(array) {
 
 function minIndex(array) {
 	let index = 0;
-	for (let i = 0; i < array.length; i++) {
-		if (array[index] > array[i]) index = i;
-	}
+	for (let i = 0; i < array.length; i++) if (array[index] > array[i]) index = i;
+
 	return index;
 }
 

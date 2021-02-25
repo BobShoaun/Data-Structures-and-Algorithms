@@ -9,8 +9,8 @@ function heapSort(array) {
 }
 
 /* more efficient way to populate heap
-   worst case: O(n log n) for population
-   
+   worst case: O(n) for population
+   extracting worst case: O(n log n)
 */
 function heapSort2(array) {
 	let heap = new MaxHeap();
@@ -19,7 +19,6 @@ function heapSort2(array) {
 	let sorted = [];
 	while (!heap.empty) sorted.push(heap.extractMax());
 	return sorted;
-	// console.log(heap.array);
 }
 
 console.log(heapSort2([2, 7, 26, 25, 19, 17, 1, 90, 3, 36]));
