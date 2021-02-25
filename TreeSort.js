@@ -1,4 +1,5 @@
 const BinarySearchTree = require("./BinarySearchTree");
+const AVLTree = require("./AVLTree");
 
 /* 
 limitation: no duplicates allowed
@@ -8,6 +9,12 @@ function treeSort(...array) {
 	let bst = new BinarySearchTree();
 	bst.insertAll(array);
 	return [...bst.inOrderTraversal()];
+}
+
+function treeSort2(...array) {
+  let avl = new AVLTree();
+  avl.insertAll(...array);
+  return [...avl.inOrderTraversal()];
 }
 
 module.exports = treeSort;
