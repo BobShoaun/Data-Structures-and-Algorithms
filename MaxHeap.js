@@ -1,3 +1,4 @@
+// nearly complete binary tree
 class MaxHeap {
 	constructor() {
 		this.array = [Infinity];
@@ -7,7 +8,7 @@ class MaxHeap {
 		return this.array.length <= 1;
 	}
 
-	// O(log n)
+	// Worst case: O(n log n)
 	insert(...numbers) {
 		numbers.forEach(number => this.bubbleUp(this.array.push(number) - 1));
 	}
@@ -27,7 +28,9 @@ class MaxHeap {
 		return max;
 	}
 
-	// O(log n)
+	/* aka bubbleDown
+  O(log n) 
+  */
 	maxHeapify(index) {
 		let left = this.getLeftChild(index);
 		let right = this.getRightChild(index);
@@ -45,13 +48,13 @@ class MaxHeap {
 		this.maxHeapify(max);
 	}
 
-	// O(log n)
+	// Worst case: O(log n)
 	bubbleUp(index) {
 		let parent = this.getParent(index);
-		if (this.array[index] > this.array[parent]) {
-			this.swap(index, parent);
-			this.bubbleUp(parent);
-		}
+		if (this.array[index] <= this.array[parent])
+      return;
+		this.swap(index, parent);
+		this.bubbleUp(parent);
 	}
 
 	swap(i, j) {

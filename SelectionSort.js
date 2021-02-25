@@ -1,4 +1,3 @@
-
 // O(n^2)
 function selectionSort(array) {
 	let sortedArray = [];
@@ -6,7 +5,7 @@ function selectionSort(array) {
 	while (array.length > 0) {
 		let mIndex = minIndex(array);
 		sortedArray.push(array[mIndex]);
-        array.splice(mIndex, 1);
+		array.splice(mIndex, 1);
 	}
 
 	return sortedArray;
