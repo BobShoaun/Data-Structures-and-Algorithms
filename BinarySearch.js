@@ -11,7 +11,7 @@ function binarySearch(sortedArray, key) {
 }
 
 let pairs = [
-  { key: -1, value: 'zero' },
+  { key: -1, value: 'negative one' },
   { key: 0, value: 'zero' },
   { key: 1, value: 'one' },
   { key: 2, value: 'two' },
@@ -22,6 +22,7 @@ let pairs = [
   { key: 7, value: 'seven' },
   { key: 8, value: 'eight' },
   { key: 100, value: 'hundred' },
+  { key: 1000000, value: 'million' },
 ];
 
-console.log(binarySearch(pairs, 100));
+console.log(binarySearch(pairs, 1000000));
