@@ -1,17 +1,16 @@
-// import Queue from "./Queue.js";
 const Queue = require("./Queue");
 
 /*
-An AVL tree is a binary search tree with the property of a balance factor
-this one is my own modification that is easier to consume
+an augmented avl tree with an additional size property, 
+allowing it too keep track of each element's rank and do Rank and Select operations.
 */
-class AVLTree {
+class RankedAVLTree {
 	constructor() {
 		this.key = null;
-		// this.value = 0;
 		this.left = null;
 		this.right = null;
 		this.height = -1;
+		this.size = 0;
 	}
 
 	get leftHeight() {
@@ -30,6 +29,18 @@ class AVLTree {
 		this.height = 1 + Math.max(this.leftHeight, this.rightHeight);
 	}
 
+	get leftSize() {
+		return this.left?.size ?? 0;
+	}
+
+	get rightSize() {
+		return this.right?.size ?? 0;
+	}
+
+	updateSize() {
+		this.size = 1 + this.rightSize + this.leftSize;
+	}
+
 	rightRotate() {
 		let x = this.left;
 		let transfer = x.right;
@@ -41,6 +52,10 @@ class AVLTree {
 		// update heights
 		this.updateHeight();
 		x.updateHeight();
+
+		// update sizes
+		this.updateSize();
+		x.updateSize();
 
 		// new root
 		return x;
@@ -58,6 +73,10 @@ class AVLTree {
 		this.updateHeight();
 		x.updateHeight();
 
+		// update sizes
+		this.updateSize();
+		x.updateSize();
+
 		// new root
 		return x;
 	}
@@ -67,16 +86,19 @@ class AVLTree {
 		if (!this.key) {
 			this.key = key;
 			this.height = 0;
+			this.size = 1;
 			return this;
 		}
 
 		if (key < this.key) {
-			if (!this.left) this.left = new AVLTree();
+			if (!this.left) this.left = new RankedAVLTree();
 			this.left = this.left.insert(key);
 		} else if (key > this.key) {
-			if (!this.right) this.right = new AVLTree();
+			if (!this.right) this.right = new RankedAVLTree();
 			this.right = this.right.insert(key);
 		} else throw new Error("No duplicate values allowed");
+
+		this.size++;
 
 		this.updateHeight();
 
@@ -104,6 +126,7 @@ class AVLTree {
 
 		return this;
 	}
+  
 	delete(key) {}
 
 	*inOrderTraversal() {
@@ -137,47 +160,9 @@ class AVLTree {
 		}
 	}
 
-	// display() {
-	//   let bfs = [...this.bfs()];
-
-	// }
-
 	insertAll(...keys) {
 		let root = this;
 		for (let key of keys) root = root.insert(key);
 		return root;
 	}
 }
-
-module.exports = AVLTree;
-
-let tree = new AVLTree();
-tree = tree.insert(7);
-tree = tree.insert(5);
-tree = tree.insert(6);
-tree = tree.insert(8);
-tree = tree.insert(3);
-tree = tree.insert(4);
-
-// tree = tree.insertAll(7, 5, 6, 8, 3, 4);
-
-console.log([...tree.preOrderTraversal()]);
-
-console.log([...tree.bfs()]);
-
-// get total sum of keys from key >= onwards
-function total(T, key) {
-	if (T == null) return 0;
-	if (key == T.key) return T.key + total(T.right, key);
-	if (key > T.key) return total(T.right, key);
-	return T.key + total(T.right, key) + total(T.left, key);
-}
-
-function average(T, start, end) {
-  let tot = total(T, start) - total(T, end) + end;
-  let count = end - start + 1;
-  return tot / count
-}
-
-console.log(total(tree, 6));
-console.log(average(tree, 6, 6));
